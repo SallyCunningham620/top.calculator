@@ -63,11 +63,14 @@ numberButton.forEach((number) => {
 
 //function for calculating and returning result to output
 function calculate() {
+    if (b === "0") {
+        return outputNum.textContent = ":/"
+    } else{
     console.log(a);
     console.log(b);
-    const result = operate(Number(a), operator, Number(b));
+    const result = Math.round((operate(Number(a), operator, Number(b))) * 1000) / 1000;
     outputNum.textContent = result;
-    console.log(result);
+    console.log(result);}
 }
 equalButton.addEventListener('click', () =>{
     if (operator !== "" && !clickedOperator){
@@ -121,7 +124,6 @@ function operate(num1, operator, num2) {
         break;
 
         case '/':
-        if (num2 === 0) return "err";
         return divide(num1, num2);
     }
 };
