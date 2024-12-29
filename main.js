@@ -1,11 +1,17 @@
-const outputNum = document.getElementById("outputNum");
+let num1 = document.querySelector(".num1Text");
+let operator = document.querySelector(".operatorText")
+let num2 = document.querySelector(".num2Text");
+let outputNum = document.getElementById("outputNum");
 const numberButton = document.querySelectorAll(".num");
 const operatorButton = document.querySelectorAll(".operator");
 const equalButton = document.querySelector(".equal");
 const clearButton = document.querySelector(".clear");
-outputNum.textContent = ""
 
-//let operator = "";
+num1.textContent = "";
+operator.textContent = "";
+num2.textContent = "";
+outputNum.textContent = "0";
+
 let previousNum = ""
 let clickedOperator = "";
 
@@ -23,11 +29,16 @@ function divide(num1, num2) {
 }
 
 function clear() {
-    let operator = "";
-    let num1 = "";
-    let num2 = "";
-    display.value = "0"
+    operator = "";
+    num1Text = "";
+    num2Text = "";
+    operator = "";
+    previousNum = ""
+    clickedOperator = "";
+    outputNum.value = "0"
 }
+
+clearButton.addEventListener('click', clear);
 
 function operate(operator, num1, num2) {
     switch(operator){
@@ -49,10 +60,15 @@ function operate(operator, num1, num2) {
     }
 };
 
+function calculate() {
+    const result = operate(clickedOperator, num1, previousNum);
+    outputNum.textContent = result;
+}
+
 numberButton.forEach((number) => {
     number.addEventListener("click", () => {
     previousNum += number.value
-    outputNum.textContent = previousNum; 
+    num1.textContent = previousNum; 
     console.log(previousNum);
 
 })
@@ -60,13 +76,14 @@ numberButton.forEach((number) => {
 
 operatorButton.forEach((operator) => {
     operator.addEventListener('click', () => {
-        console.log('${operator}')
-       /* num1 = previousNum;
-        clickedOperator = operator.textContent;
-        event.target.textContent = previousNum + clickedOperator;
-        previousNum = "";
-        console.log(number1 + storedNumber);
-console.log(clickedOperator);
-calculate();*/
+        num1 = previousNum;
+        clickedOperator = operator.value;
+        operator.textContent = clickedOperator;
+        outputNum.textContent = num1 + clickedOperator;
+        console.log(num1);
+        console.log(clickedOperator);
+        calculate ();
 })
 })
+
+equalButton.addEventListener('click', calculate);
