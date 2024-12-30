@@ -3,6 +3,7 @@ const numberButton = document.querySelectorAll(".num");
 const operatorButton = document.querySelectorAll(".operator");
 const equalButton = document.querySelector(".equal");
 const clearButton = document.querySelector(".clear");
+let decimalButton = document.querySelector("#decimal");
 
 outputNum.textContent = "0";
 
@@ -11,6 +12,7 @@ let b = "";
 let operator = "";
 let clickedOperator = false;
 let isEqual = false;
+
 
 //click an operator
 function addOperator(operatorButton) {
@@ -51,7 +53,10 @@ function addNumber(number) {
     if (clickedOperator) {
         outputNum.textContent = "";
         clickedOperator = false;
-    } 
+    }
+    if (number.value == ".") {
+        return oneDecimal(number.value)
+    }
     outputNum.textContent += number.value;
 }
 numberButton.forEach((number) => {
@@ -60,6 +65,17 @@ numberButton.forEach((number) => {
         console.log(outputNum.textContent)
     })
 })
+
+//1 decimal per entry
+function oneDecimal(decimal) {
+    if(outputNum.textContent === "") {
+        outputNum.textContent = '0';
+        outputNum.textContent += decimal;
+    } else if(!outputNum.textContent.includes(decimal)) {
+        outputNum.textContent += decimal;
+    } 
+}
+
 
 //function for calculating and returning result to output
 function calculate() {
@@ -83,6 +99,7 @@ equalButton.addEventListener('click', () =>{
         operator = "";
     }}
 )
+
 //clear back to 0
 function clear() {
     a = "";
@@ -91,6 +108,7 @@ function clear() {
     isEqual = false;
     clickedOperator = false;
     outputNum.value = "0";
+    decimalButton.disabled = false;
 }
 clearButton.addEventListener('click', clear);
 
