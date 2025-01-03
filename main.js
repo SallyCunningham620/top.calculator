@@ -3,7 +3,9 @@ const numberButton = document.querySelectorAll(".num");
 const operatorButton = document.querySelectorAll(".operator");
 const equalButton = document.querySelector(".equal");
 const clearButton = document.querySelector(".clear");
+const backspaceButton = document.querySelector(".backspace");
 let decimalButton = document.querySelector("#decimal");
+const allButtons = document.getElementById("calculatorContainer");
 
 outputNum.textContent = "0";
 
@@ -13,36 +15,58 @@ let operator = "";
 let clickedOperator = false;
 let isEqual = false;
 
+window.addEventListener('keydown', handleKeyboardInput);
+
+function handleKeyboardInput(e) {
+    if (e.key >= 0 && e.key <= 9) addNumber(e.key)
+    if (e.key === '.') oneDecimal()
+    if (e.key === '=' || e.key === 'Enter') equal()
+    if (e.key === 'Backspace') backspace()
+    if (e.key === 'Escape') clear()
+    if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/')
+      addOperator(convertOperator(e.key));
+    outputNum.textContent= e.key;
+}
+  
+  function convertOperator(keyboardOperator) {
+    if (keyboardOperator === '/') return '/'
+    if (keyboardOperator === '*') return '*'
+    if (keyboardOperator === '-') return '−'
+    if (keyboardOperator === '+') return '+'
+  }  
 
 //click an operator
 function addOperator(operatorButton) {
-    console.log(outputNum.textContent);
-    console.log(clickedOperator);
-    console.log(operator);
+    //console.log(outputNum.textContent);
+    //console.log(clickedOperator);
+    //console.log(operator);
 
     if (operator !== "" && !clickedOperator) {
         b = outputNum.textContent;
         calculate();
-        console.log(a);
-        console.log(b);
+     //   console.log(a);
+     //   console.log(b);
 
     }
     a = outputNum.textContent;
+    //console.log(outputNum.textContent);
     operator = operatorButton.value;
     clickedOperator = true;
-    console.log(a);
-    console.log(clickedOperator);
+    //console.log(a);
+    //console.log(clickedOperator);
 }
 
-operatorButton.forEach((operator) => {
-    operator.addEventListener('click', () => {
-    addOperator(operator)
-        console.log(operator);
+operatorButton.forEach((button) => {
+    button.addEventListener('click', () => {
+    addOperator(button.textContent);
+    outputNum.textContent += operator;
+    //    console.log(operator);
 })
 })
 
 //click a number
 function addNumber(number) {
+    console.log(number);
     if (outputNum.textContent == "0") {
         outputNum.textContent = ""
     }
@@ -57,18 +81,20 @@ function addNumber(number) {
     if (number.value == ".") {
         return oneDecimal(number.value)
     }
-    outputNum.textContent += number.value;
+    outputNum.textContent += number;
+    console.log(number);
 }
-numberButton.forEach((number) => {
-    number.addEventListener("click", () => {
-        addNumber(number);
+numberButton.forEach((button) => {
+    button.addEventListener("click", () => {
+        addNumber(button.textContent);
         console.log(outputNum.textContent)
     })
 })
 
 //1 decimal per entry
 function oneDecimal(decimal) {
-    if(outputNum.textContent === "") {
+    console.log(decimal);
+        if(outputNum.textContent === "") {
         outputNum.textContent = '0';
         outputNum.textContent += decimal;
     } else if(!outputNum.textContent.includes(decimal)) {
@@ -76,6 +102,9 @@ function oneDecimal(decimal) {
     } 
 }
 
+decimalButton.addEventListener("click", () => {
+    oneDecimal(decimalButton.textContent);
+})
 
 //function for calculating and returning result to output
 function calculate() {
@@ -88,17 +117,33 @@ function calculate() {
     outputNum.textContent = result;
     console.log(result);}
 }
-equalButton.addEventListener('click', () =>{
+
+function equal() {
     if (operator !== "" && !clickedOperator){
         b = outputNum.textContent;
-        calculate();
+        console.log(b);
+        outputNum.textContent = calculate();
         // Reset
         isEqual = true;
         a = 0;
         b = 0;
         operator = "";
-    }}
-)
+    }
+}
+equalButton.addEventListener('click', equal);
+
+//remove last entered
+function backspace() {
+    //has 0 if nothing else to
+    if (outputNum.textContent = "0") {
+        return "0";
+    } else {
+        let lastCharIndex = outputNum.textContent.length - 1;
+    console.log(lastCharIndex);
+    outputNum.textContent = outputNum.textContent.slice(0, lastCharIndex);
+    }
+}
+backspaceButton.addEventListener('click', backspace);
 
 //clear back to 0
 function clear() {
@@ -107,7 +152,7 @@ function clear() {
     operator = "";
     isEqual = false;
     clickedOperator = false;
-    outputNum.value = "0";
+    outputNum.textContent = "0";
     decimalButton.disabled = false;
 }
 clearButton.addEventListener('click', clear);
