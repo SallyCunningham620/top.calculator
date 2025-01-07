@@ -15,23 +15,24 @@ let operator = "";
 let clickedOperator = false;
 let isEqual = false;
 
-//window.addEventListener('keydown', handleKeyboardInput);
+window.addEventListener('keydown', handleKeyboardInput);
 decimalButton.addEventListener("click", () => {
     oneDecimal(decimalButton.textContent);
 })
 
-/*function handleKeyboardInput(e) {
-    if (e.key >= 0 && e.key <= 9) addNumber(e.key);
-    if (e.key === '.') oneDecimal('.');
-    if (e.key === '=' || e.key === 'Enter') equal();
-    if (e.key === 'Backspace') backspace();
-    if (e.key === 'Escape') clear();
-    if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/')
-      addOperator(convertOperator(e.key));
-    outputNum.textContent= e.key;
+function handleKeyboardInput(e) {
+    if (e.key >= 0 && e.key <= 9) {addNumber(e.key);}
+    //if (e.key === '.') oneDecimal('.');
+    else if (e.key === '=' || e.key == 'Enter') {equal();}
+    //if (e.key === 'Backspace') backspace();
+    //if (e.key === 'Escape') clear();
+    //if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/')
+    //  addOperator(convertOperator(e.key));
+    //outputNum.textContent= e.key;
+    else {return "Incorrct key entered."};
 }
   
-  function convertOperator(keyboardOperator) {
+  /*function convertOperator(keyboardOperator) {
     if (keyboardOperator === '/') return '/'
     if (keyboardOperator === '*') return '*'
     if (keyboardOperator === '-') return '−'
@@ -94,7 +95,6 @@ function addNumber(number) {
         return oneDecimal(number);
     }*/
     outputNum.textContent += number;
-    //clickedOperator = true;
     console.log(number);
     console.log(isEqual);
     console.log(clickedOperator);
@@ -137,20 +137,26 @@ function calculate() {
 }
 equalButton.addEventListener('click', equal);
 */
-equalButton.addEventListener('click', () =>{
+equalButton.addEventListener('click', equal);
+
+function equal() {
     console.log(isEqual);
     console.log(operator);
     console.log(clickedOperator);
+    console.log(b);
+    console.log(outputNum.textContent);
     if (operator !== "" && !clickedOperator){
         b = outputNum.textContent;
+        console.log(b);
         calculate();
         // Reset
         isEqual = true;
         a = 0;
         b = 0;
         operator = "";
+    } else {
+        return outputNum = "0";
     }}
-)
 
 //remove last entered
 function backspace() {
