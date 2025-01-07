@@ -36,32 +36,10 @@ decimalButton.addEventListener("click", () => {
     if (keyboardOperator === '*') return '*'
     if (keyboardOperator === '-') return '−'
     if (keyboardOperator === '+') return '+'
-  }  
+  }  */
 
 //click an operator
-/*function addOperator(operator) {
-    console.log(clickedOperator);
-    if (operator !== "" && !clickedOperator){
-        b = outputNum.textContent;
-        calculate();
-        console.log(b);
-    }
-    a = outputNum.textContent;
-    console.log(outputNum.textContent);
-    operator = operatorButton.textContent;
-    clickedOperator = true;
-    //console.log(a);
-    console.log(clickedOperator);
-}
 
-operatorButton.forEach((button) => {
-    button.addEventListener('click', () => {
-    addOperator(button.textContent);
-    outputNum.textContent += operator;
-    //    console.log(operator);
-})
-})
-*/
 function addOperator(operatorButton) {
     console.log(outputNum.textContent);
     console.log(operatorButton);
@@ -176,15 +154,15 @@ equalButton.addEventListener('click', () =>{
 
 //remove last entered
 function backspace() {
-    //has 0 if nothing else to
-    if (outputNum.textContent = "") {
-        return "0";
-    } else {
-        let lastCharIndex = outputNum.textContent.length - 1;
-    console.log(lastCharIndex);
-    outputNum.textContent = outputNum.textContent.pop();
+    console.log(a);
+   /* if (!clickedOperator) {
+        a = outputNum.textContent;
+    }*/
+    outputNum.textContent = outputNum.textContent
+    .toString()
+    .slice(0, -1);
+    console.log(a)
     console.log(outputNum.textContent);
-    }
 }
 backspaceButton.addEventListener('click', backspace);
 
