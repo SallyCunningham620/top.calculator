@@ -5,7 +5,6 @@ const equalButton = document.querySelector(".equal");
 const clearButton = document.querySelector(".clear");
 const backspaceButton = document.querySelector(".backspace");
 let decimalButton = document.querySelector("#decimal");
-//const allButtons = document.getElementById("calculatorContainer");
 
 outputNum.textContent = "0";
 
@@ -20,47 +19,9 @@ decimalButton.addEventListener("click", () => {
     oneDecimal(decimalButton.textContent);
 })
 
-function handleKeyboardInput(e) {
-    if (e.key >= 0 && e.key <= 9) {addNumber(e.key);}
-    //if (e.key === '.') oneDecimal('.');
-    else if (e.key === '=' || e.key == 'Enter') {equal();}
-    //if (e.key === 'Backspace') backspace();
-    //if (e.key === 'Escape') clear();
-    //if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/')
-    //  addOperator(convertOperator(e.key));
-    //outputNum.textContent= e.key;
-    else {return "Incorrct key entered."};
-}
-  
-  /*function convertOperator(keyboardOperator) {
-    if (keyboardOperator === '/') return '/'
-    if (keyboardOperator === '*') return '*'
-    if (keyboardOperator === '-') return '−'
-    if (keyboardOperator === '+') return '+'
-  }  */
-
-//click an operator
-
-function addOperator(operatorButton) {
-    console.log(outputNum.textContent);
-    console.log(operatorButton);
-    console.log(clickedOperator);
-    //console.log(operator);
-
-    if (operator !== "" && !clickedOperator) {
-        b = outputNum.textContent;
-        calculate();
-        console.log(a);
-        console.log(b);
-
-    }
-    a = outputNum.textContent;
-    operator = operatorButton;
-    clickedOperator = true;
-    console.log(a);
-    console.log(clickedOperator);
-    console.log(operator);
-}
+equalButton.addEventListener('click', equal);
+backspaceButton.addEventListener('click', backspace);
+clearButton.addEventListener("click", clear)
 
 operatorButton.forEach((button) => {
     button.addEventListener('click', () => {
@@ -77,9 +38,37 @@ numberButton.forEach((button) => {
     })
 })
 
+function handleKeyboardInput(e) {
+    if (e.key >= 0 && e.key <= 9) addNumber(e.key);
+    if (e.key === '.') oneDecimal('.');
+    if (e.key === '=' || e.key == 'Enter') equal();
+    if (e.key === 'Backspace') backspace();
+    if (e.key === 'Escape') clear();
+    if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/')
+      addOperator(convertOperator(e.key));
+    else {return "Incorrect key entered."};
+}
+  
+function convertOperator(keyboardOperator) {
+    if (keyboardOperator === '/') return '/'
+    if (keyboardOperator === '*') return '*'
+    if (keyboardOperator === '-') return '-'
+    if (keyboardOperator === '+') return '+'
+  }
+
+//click an operator
+function addOperator(operatorButton) {
+    if (operator !== "" && !clickedOperator) {
+        b = outputNum.textContent;
+        calculate();
+    }
+    a = outputNum.textContent;
+    operator = operatorButton;
+    clickedOperator = true;
+}
+
 //click a number
 function addNumber(number) {
-    console.log(number);
     if (outputNum.textContent == "0") {
         outputNum.textContent = ""
     }
@@ -91,21 +80,17 @@ function addNumber(number) {
         outputNum.textContent = "";
         clickedOperator = false;
     }
-/*    if (number == ".") {
-        return oneDecimal(number);
-    }*/
     outputNum.textContent += number;
-    console.log(number);
-    console.log(isEqual);
-    console.log(clickedOperator);
 }
 
 //1 decimal per entry
 function oneDecimal(decimal) {
-    console.log(decimal);
+    if (clickedOperator) {
+        outputNum.textContent = "";
+        clickedOperator = false;
+    }
     if(outputNum.textContent === "") {
-        outputNum.textContent = '0';
-        outputNum.textContent += decimal;
+        outputNum.textContent = '0' + decimal;
     } else if(!outputNum.textContent.includes(decimal)) {
         outputNum.textContent += decimal;
     } 
@@ -113,41 +98,16 @@ function oneDecimal(decimal) {
 
 //function for calculating and returning result to output
 function calculate() {
-    if (b === "0") {
+    if (b === "0" && operator ==="/") {
         return outputNum.textContent = ":/"
     } else{
-    console.log(a);
-    console.log(b);
-    const result = Math.round((operate(Number(a), operator, Number(b))) * 1000) / 1000;
+    const result = Math.round((operate(a, operator, b)) * 1000) / 1000;
     outputNum.textContent = result;
-    console.log(result);}
-}
-
-/*function equal() {
-    if (operator !== "" && !clickedOperator){
-        b = outputNum.textContent;
-        console.log(b);
-        outputNum.textContent = calculate();
-        // Reset
-        isEqual = true;
-        a = 0;
-        b = 0;
-        operator = "";
-    }
-}
-equalButton.addEventListener('click', equal);
-*/
-equalButton.addEventListener('click', equal);
+}}
 
 function equal() {
-    console.log(isEqual);
-    console.log(operator);
-    console.log(clickedOperator);
-    console.log(b);
-    console.log(outputNum.textContent);
     if (operator !== "" && !clickedOperator){
         b = outputNum.textContent;
-        console.log(b);
         calculate();
         // Reset
         isEqual = true;
@@ -160,17 +120,10 @@ function equal() {
 
 //remove last entered
 function backspace() {
-    console.log(a);
-   /* if (!clickedOperator) {
-        a = outputNum.textContent;
-    }*/
     outputNum.textContent = outputNum.textContent
     .toString()
     .slice(0, -1);
-    console.log(a)
-    console.log(outputNum.textContent);
 }
-backspaceButton.addEventListener('click', backspace);
 
 //clear back to 0
 function clear() {
@@ -180,10 +133,8 @@ function clear() {
     isEqual = false;
     clickedOperator = false;
     outputNum.textContent = "0";
-    decimalButton.disabled = false;
+    //decimalButton.disabled = false;
 }
-
-clearButton.addEventListener("click", clear)
 
 //functions for math
 function add(num1, num2) {
@@ -201,6 +152,8 @@ function divide(num1, num2) {
 
 //function for operator used
 function operate(num1, operator, num2) {
+    a = Number(a);
+    b = Number(b);
     switch(operator){
         case '+':
         return add(num1, num2);
@@ -216,5 +169,7 @@ function operate(num1, operator, num2) {
 
         case '/':
         return divide(num1, num2);
+        default:
+        return null;
     }
 };
