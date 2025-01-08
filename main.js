@@ -4,7 +4,7 @@ const operatorButton = document.querySelectorAll(".operator");
 const equalButton = document.querySelector(".equal");
 const clearButton = document.querySelector(".clear");
 const backspaceButton = document.querySelector(".backspace");
-let decimalButton = document.querySelector("#decimal");
+let decimalButton = document.querySelector(".decimal");
 
 outputNum.textContent = "0";
 
