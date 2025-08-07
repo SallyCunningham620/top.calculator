@@ -46,11 +46,13 @@
     margin: 3px;
 }
 
+/*Clear button*/
 #row5 .clear {
     background-color: rgba(209, 50, 50, 0.829);
     width: 100px;
 }
 
+/*Backspace button*/
 #row5 .backspace {
     background-color: rgb(70, 70, 226);
     width: 130px;

@@ -1,3 +1,4 @@
+/*JS Calls*/
 let outputNum = document.getElementById("outputNum");
 const numberButton = document.querySelectorAll(".num");
 const operatorButton = document.querySelectorAll(".operator");
@@ -14,6 +15,7 @@ let operator = "";
 let clickedOperator = false;
 let isEqual = false;
 
+//Keydown Event Listener
 window.addEventListener('keydown', handleKeyboardInput);
 decimalButton.addEventListener("click", () => {
     oneDecimal(decimalButton.textContent);
@@ -25,16 +27,13 @@ clearButton.addEventListener("click", clear)
 
 operatorButton.forEach((button) => {
     button.addEventListener('click', () => {
-        console.log(button.textContent);
         addOperator(button.textContent);
-        console.log();
 })
 })
 
 numberButton.forEach((button) => {
     button.addEventListener("click", () => {
         addNumber(button.textContent);
-        console.log(outputNum.textContent)
     })
 })
 
@@ -83,7 +82,7 @@ function addNumber(number) {
     outputNum.textContent += number;
 }
 
-//1 decimal per entry
+// 1 decimal per entry
 function oneDecimal(decimal) {
     if (clickedOperator) {
         outputNum.textContent = "";
@@ -115,14 +114,16 @@ function equal() {
         b = 0;
         operator = "";
     } else {
-        return outputNum = "0";
+        return outputNum.textContent = "0";
     }}
 
 //remove last entered
 function backspace() {
-    outputNum.textContent = outputNum.textContent
-    .toString()
-    .slice(0, -1);
+    if (outputNum.textContent.length > 1) {
+        outputNum.textContent = outputNum.textContent.slice(0, -1);
+    } else {
+        outputNum.value = '0';
+    }
 }
 
 //clear back to 0
@@ -133,7 +134,7 @@ function clear() {
     isEqual = false;
     clickedOperator = false;
     outputNum.textContent = "0";
-    //decimalButton.disabled = false;
+    decimalButton.disabled = false;
 }
 
 //functions for math
