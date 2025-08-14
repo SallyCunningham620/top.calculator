@@ -1,5 +1,20 @@
 /*styles*/
 
+/*Portfolio Nav*/
+.port-nav {
+    position: relative;
+    text-align: center;
+}
+.port-nav a {
+    text-decoration: none;
+    color: rgb(70, 70, 226);
+}
+
+.port-nav a:hover {
+    color:rgb(204, 0, 255);
+}
+
+/*Calculator styles*/
 #title {
     text-align: center;
     margin: 15px auto 0px;
@@ -56,14 +71,4 @@
 #row5 .backspace {
     background-color: rgb(70, 70, 226);
     width: 130px;
-}
-
-/*Portfolio Nav*/
-.port-nav a {
-    text-decoration: none;
-    color: rgb(70, 70, 226);
-}
-
-.port-nav a:hover {
-    color:rgb(204, 0, 255);
 }
