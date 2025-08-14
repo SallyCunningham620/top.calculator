@@ -58,7 +58,12 @@
     width: 130px;
 }
 
-.git-nav a {
+/*Portfolio Nav*/
+.port-nav a {
     text-decoration: none;
     color: rgb(70, 70, 226);
+}
+
+.port-nav a:hover {
+    color:rgb(204, 0, 255);
 }

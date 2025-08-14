@@ -1,1 +1,1 @@
-# top.calculator
+Create a calculator using HTML view, CSS styling, and JS calculation functions.
